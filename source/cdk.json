@@ -33,6 +33,55 @@
         "@aws-cdk/aws-apigateway:disableCloudWatchRole": true,
         "@aws-cdk/core:enablePartitionLiterals": true,
         "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": true,
-        "@aws-cdk/core:target-partitions": ["aws", "aws-cn"]
+        "@aws-cdk/core:target-partitions": ["aws", "aws-cn"],
+
+        "vpcCidr": "10.120.0.0/16",
+        "route53HostedZoneName": "medeiros.com",
+        "route53HostedZoneId": "Z10171262JRSGPR2OBDCX",
+        "druidDomain": "druid.medeiros.com",
+        "druidVersion": "27.0.0",
+        "druidOperationPlatform": "ec2",
+        "druidClusterName": "dev",
+        "internetFacing": true,
+        "druidExtensions": [
+            "druid-hdfs-storage",
+            "druid-kafka-indexing-service",
+            "druid-datasketches",
+            "druid-kinesis-indexing-service",
+            "druid-avro-extensions",
+            "druid-parquet-extensions",
+            "druid-protobuf-extensions",
+            "druid-orc-extensions"
+        ],
+        "druidEc2Config": {
+            "master": {
+                "minNodes": 1,
+                "maxNodes": 2,
+                "instanceType": "t3.medium"
+            },
+            "query": {
+                "minNodes": 1,
+                "maxNodes": 2,
+                "instanceType": "t3.medium"
+            },
+            "data": {
+                "minNodes": 1,
+                "maxNodes": 2,
+                "segmentCacheVolumeSize": 100,
+                "instanceType": "t3.large"
+            },
+            "zookeeper": {
+                "minNodes": 3,
+                "maxNodes": 3,
+                "instanceType": "t3.small"
+            }
+        },
+        "druidMetadataStoreConfig": {
+            "metadataStoreType": "aurora",
+            "metadataStoreConfig": {
+                "rdsInstanceType": "t3.medium",
+                "rdsInstanceCount": 2
+            }
+        }
     }
 }
